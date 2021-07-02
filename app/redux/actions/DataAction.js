@@ -1,20 +1,20 @@
-import {DATA, DATA_SUCCESS, DATA_FAIL} from './../ActionTypes';
+import Constants from './../ActionTypes';
 // import {baseUrl} from '../../config/Constants';
 
 export const DataAction = reqData => {
   return async dispatch => {
     try {
       dispatch({
-        type: DATA,
+        type: Constants.DATA,
       });
 
       dispatch({
-        type: DATA_SUCCESS,
+        type: Constants.DATA_SUCCESS,
         payload: reqData,
       });
     } catch (error) {
       dispatch({
-        type: DATA_FAIL,
+        type: Constants.DATA_FAIL,
         payload: error,
       });
     }

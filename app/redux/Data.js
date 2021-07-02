@@ -18,14 +18,12 @@ export const initData = {
           mail: null,
           phone: null,
           allotSlot: function (userName, mail, phoneNo) {
-            console.log('SET');
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
-            console.log('DELETE');
-
             this.name = null;
             this.mail = null;
             this.phone = null;
@@ -42,7 +40,8 @@ export const initData = {
           allotSlot: function (userName, mail, phoneNo) {
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
             this.name = null;
@@ -61,7 +60,8 @@ export const initData = {
           allotSlot: function (userName, mail, phoneNo) {
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
             this.name = null;
@@ -80,7 +80,8 @@ export const initData = {
           allotSlot: function (userName, mail, phoneNo) {
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
             this.name = null;
@@ -106,7 +107,8 @@ export const initData = {
           allotSlot: function (userName, mail, phoneNo) {
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
             this.name = null;
@@ -125,7 +127,8 @@ export const initData = {
           allotSlot: function (userName, mail, phoneNo) {
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
             this.name = null;
@@ -144,7 +147,8 @@ export const initData = {
           allotSlot: function (userName, mail, phoneNo) {
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
             this.name = null;
@@ -163,7 +167,8 @@ export const initData = {
           allotSlot: function (userName, mail, phoneNo) {
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
             this.name = null;
@@ -189,7 +194,8 @@ export const initData = {
           allotSlot: function (userName, mail, phoneNo) {
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
             this.name = null;
@@ -208,7 +214,8 @@ export const initData = {
           allotSlot: function (userName, mail, phoneNo) {
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
             this.name = null;
@@ -227,7 +234,8 @@ export const initData = {
           allotSlot: function (userName, mail, phoneNo) {
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
             this.name = null;
@@ -246,7 +254,8 @@ export const initData = {
           allotSlot: function (userName, mail, phoneNo) {
             this.name = userName;
             this.mail = mail;
-            (this.phone = phoneNo), (this.alloted = true);
+            this.phone = phoneNo;
+            this.alloted = true;
           },
           deAllotSlot: function () {
             this.name = null;

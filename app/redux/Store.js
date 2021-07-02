@@ -8,8 +8,8 @@ import {persistStore, persistReducer} from 'redux-persist';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  // whitelist: ['DataReducer'],
-  whitelist: [''],
+  whitelist: ['DataReducer'],
+  // whitelist: [''],
   // blacklist: [''],
 };
 

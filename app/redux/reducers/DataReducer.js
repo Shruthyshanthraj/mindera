@@ -1,4 +1,4 @@
-import {DATA, DATA_SUCCESS, DATA_FAIL} from './../ActionTypes';
+import Constants from './../ActionTypes';
 import moment from 'moment';
 import {initData} from '../Data';
 
@@ -107,26 +107,73 @@ const intialState = {
 };
 export default (state = initData, action) => {
   switch (action.type) {
-    case DATA: {
+    case Constants.DATA: {
       return {
         ...state,
         loading: true,
       };
     }
-    case DATA_SUCCESS: {
+    case Constants.DATA_SUCCESS: {
       return {
         ...state,
         loading: false,
         actionsLogs: action.payload,
       };
     }
-    case DATA_FAIL: {
+    case Constants.DATA_FAIL: {
       return {
         ...state,
-        loading: false,
         errorMsg: action.payload,
       };
     }
+    case Constants.ALLOT_ACTIONS_SUCCESS:
+      // console.log('REDUCER\n', state);
+      // console.log('ACTION\n', action.payload.mail);
+      const {mail, name, phone} = action.payload;
+      // console.log(mail, name, phone);
+
+      // console.log(
+      //   state.slotsData[action.payload.current].slots[action.payload.inner],
+      // );
+
+      state.slotsData[action.payload.current].slots[action.payload.inner].mail =
+        mail;
+      // action.payload.mail;
+      state.slotsData[action.payload.current].slots[
+        action.payload.inner
+      ].phone = phone;
+      // action.payload.phone;
+      state.slotsData[action.payload.current].slots[action.payload.inner].name =
+        name;
+      state.slotsData[action.payload.current].slots[
+        action.payload.inner
+      ].alloted = true;
+      // action.payload.name;
+
+      // console.log('STATE\n', state);
+      return {
+        ...state,
+        slotsData: state.slotsData,
+      };
+    case Constants.ALLOT_ACTIONS_FAIL:
+      state.slotsData[action.payload.current].slots[action.payload.inner].mail =
+        null;
+      state.slotsData[action.payload.current].slots[
+        action.payload.inner
+      ].phone = null;
+      state.slotsData[action.payload.current].slots[action.payload.inner].name =
+        null;
+      state.slotsData[action.payload.current].slots[
+        action.payload.inner
+      ].alloted = false;
+      // action.payload.name;
+
+      // console.log('STATE\n', state);
+      return {
+        ...state,
+        loading: true,
+        slotsData: state.slotsData,
+      };
     default: {
       return state;
     }

@@ -2,60 +2,31 @@ import React, {useEffect, useState, useRef} from 'react';
 
 import {connect} from 'react-redux';
 import {
-  Image,
-  ImageBackground,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
-  Modal,
-  Animated,
   Alert,
-  KeyboardAvoidingView,
+  Image,
   FlatList,
 } from 'react-native';
+
+import Allactions from '../../redux/actions/Allactions';
+import Constants from '../../redux/ActionTypes';
+import CheckBox from '@react-native-community/checkbox';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      validEmail: false,
       email: '',
       slotData: [],
       currentIndex: 0,
-      // today: [
-      //   {
-      //     slot: 'slot1',
-      //     booked: false,
-      //     name: 'abcd',
-      //     time: '10 - 12',
-      //   },
-      //   {
-      //     slot: 'slot2',
-      //     booked: false,
-      //     name: 'abcd',
-      //     time: '12 - 2',
-      //   },
-      //   {
-      //     slot: 'slot3',
-      //     booked: false,
-      //     name: 'abcd',
-      //     time: '2 - 4',
-      //   },
-      //   {
-      //     slot: 'slot4',
-      //     booked: false,
-      //     name: 'abcd',
-      //     time: '4 - 6',
-      //   },
-      // ],
+      slotId: null,
     };
   }
 
   componentDidMount() {
-    // console.log(this.state.slotData);
     this.setState({
       slotData: this.props.DataReducer.slotsData,
     });
@@ -68,22 +39,27 @@ class Home extends React.Component {
         : [],
     );
     return (
-      <View style={{backgroundColor: '#DFEEEA', flex: 1}}>
-        <ScrollView
-          nestedScrollEnabled={true}
-          contentContainerStyle={{flexGrow: 1}}>
+      <View
+        style={{
+          backgroundColor: '#DFEEEA',
+          flex: 1,
+          justifyContent: 'space-between',
+        }}>
+        <View>
           <View style={[{alignItems: 'center'}]}>
-            <Text>Appointment</Text>
+            <Text style={{padding: 15, fontSize: 20, fontWeight: 'bold'}}>
+              Appointment
+            </Text>
           </View>
 
-          <View style={[{borderWidth: 1}]}>
+          <View style={[{}]}>
             <FlatList
               horizontal
               contentContainerStyle={{
                 alignItems: 'center',
                 justifyContent: 'space-evenly',
                 flex: 1,
-                borderWidth: 3,
+                borderWidth: 1,
               }}
               data={this.state.slotData}
               renderItem={({item, index}) => {
@@ -91,17 +67,33 @@ class Home extends React.Component {
                 return (
                   <TouchableOpacity
                     onPress={() => {
-                      this.setState({currentIndex: index});
+                      this.setState({currentIndex: index, slotId: null});
                     }}>
                     <View
                       style={[
-                        {margin: 5, padding: 10},
+                        {margin: 5, padding: 10, borderRadius: 10},
                         index == this.state.currentIndex
-                          ? {backgroundColor: 'red'}
-                          : null,
+                          ? {backgroundColor: '#2F5D62'}
+                          : {backgroundColor: '#A7C4BC'},
                       ]}>
-                      <Text>{item.name}</Text>
-                      <Text>{item.date}</Text>
+                      <Text
+                        style={{
+                          color:
+                            index == this.state.currentIndex
+                              ? '#FFFFFF'
+                              : '#000000',
+                        }}>
+                        {item.name}
+                      </Text>
+                      <Text
+                        style={{
+                          color:
+                            index == this.state.currentIndex
+                              ? '#FFFFFF'
+                              : '#000000',
+                        }}>
+                        {item.date}
+                      </Text>
                     </View>
                   </TouchableOpacity>
                 );
@@ -112,8 +104,6 @@ class Home extends React.Component {
               }}
             />
             <FlatList
-              horizontal
-              contentContainerStyle={{}}
               data={
                 this.state.slotData.length != 0
                   ? this.state.slotData[this.state.currentIndex].slots
@@ -123,66 +113,91 @@ class Home extends React.Component {
               renderItem={({item, index}) => {
                 console.log('Inner', item);
                 return (
-                  <TouchableOpacity
-                    onPress={async () => {
-                      // console.log(
-                      //   this.state.slotData[this.state.currentIndex].slots[
-                      //     index
-                      //   ],
-                      // );
-                      // return;
-                      if (!item.alloted) {
-                        await this.props.DataReducer.slotsData[
-                          this.state.currentIndex
-                        ].slots[index].allotSlot(
-                          'Sanjay',
-                          'SANJAY@email.com',
-                          '789',
-                        );
-                      } else {
-                        await this.props.DataReducer.slotsData[
-                          this.state.currentIndex
-                        ].slots[index].deAlloq1tSlot();
-                      }
-                      console.log('FINAL PROPS', this.props);
-                      // this.forceUpdate();
-
-                      this.setState(
-                        {
-                          slotData: this.props.DataReducer.slotsData,
-                          currentIndex: this.state.currentIndex,
-                        },
-                        () => {
-                          console.log('FINAL STATE', this.state);
-                        },
-                      );
-
-                      // console.log(this.state.currentIndex);
-                      // data[this.state.currentIndex].slots[index].allotSlot(
-                      //   'Sanjay',
-                      //   'SANJAY@email.com',
-                      //   '789',
-                      // );
-                      // this.setState(
-                      //   {
-                      //     slotData: data,
-                      //   },
-                      //   () => {
-                      //     console.log(data);
-                      //   },
-                      // );
-                    }}
+                  <View
                     style={{
-                      margin: 10,
-                      borderWidth: 1,
-                      padding: 5,
+                      padding: 15,
+                      marginHorizontal: 15,
+                      marginVertical: 10,
+
+                      shadowColor: '#000',
+                      shadowOffset: {
+                        width: 0,
+                        height: 2,
+                      },
+                      shadowOpacity: 0.25,
+                      shadowRadius: 3.84,
+
+                      elevation: 5,
                       borderRadius: 5,
-                      backgroundColor: item.alloted == 0 ? 'green' : 'red',
+                      backgroundColor:
+                        item.alloted == true
+                          ? '#29BB89'
+                          : this.state.slotId === item.slotId
+                          ? '#E6DD3B'
+                          : '#FFFFFF',
                     }}>
-                    <View>
-                      <Text>{item.slotName}</Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                      }}>
+                      <View>
+                        <Text>Time :{item.slotName}</Text>
+                      </View>
+                      <View>
+                        {!item.alloted ? (
+                          <CheckBox
+                            value={this.state.slotId === item.slotId}
+                            onValueChange={newValue =>
+                              this.setState({
+                                slotId: newValue ? item.slotId : null,
+                              })
+                            }
+                          />
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() => {
+                              Alert.alert(
+                                '',
+                                'Are you sure want delete appointment?',
+                                [
+                                  {
+                                    text: 'Cancel',
+                                    onPress: () =>
+                                      console.log('Cancel Pressed'),
+                                    style: 'cancel',
+                                  },
+                                  {
+                                    text: 'Delete',
+                                    onPress: () =>
+                                      this.props.DeAllotSlot({
+                                        current: this.state.currentIndex,
+                                        inner: item.slotId - 1,
+                                      }),
+                                  },
+                                ],
+                              );
+                            }}
+                            activeOpacity={0.8}>
+                            <Image
+                              style={{height: 30, width: 30}}
+                              source={require('../../assets/Remove.png')}
+                            />
+                          </TouchableOpacity>
+                        )}
+                      </View>
                     </View>
-                  </TouchableOpacity>
+                    {item.alloted && (
+                      <View style={{paddingTop: 10}}>
+                        <Text>Email: {item.mail}</Text>
+                        <Text style={{paddingVertical: 5}}>
+                          Name: {item.name}
+                        </Text>
+                        <Text>Ph No: {item.phone}</Text>
+                      </View>
+                    )}
+                  </View>
                 );
               }}
               keyExtractor={item => {
@@ -191,38 +206,21 @@ class Home extends React.Component {
               }}
             />
           </View>
-        </ScrollView>
+        </View>
         <View style={[styles.buttonStyleView]}>
-          <TouchableOpacity style={[styles.buttonStyle]}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('InputDetail', {...this.state});
+            }}
+            disabled={this.state.slotId == null}
+            style={[
+              styles.buttonStyle,
+              this.state.slotId != null ? {} : {backgroundColor: 'grey'},
+            ]}>
             <Text style={[styles.buttonText]}>
               {'Book Appointment'.toUpperCase()}
             </Text>
           </TouchableOpacity>
-        </View>
-      </View>
-    );
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <View style={{height: 50}}>
-          <FlatList
-            horizontal={true}
-            renderItem={({item}) => (
-              <Text
-                onPress={() => alert('Booked')}
-                style={{
-                  color: '#000',
-                  borderWidth: 1,
-                  borderColor: 'blue',
-                  color: 'red',
-                  fontSize: 18,
-                }}>
-                {item.slot}
-                {'\n'}
-                {item.time}
-              </Text>
-            )}
-            data={this.state.today}
-          />
         </View>
       </View>
     );
@@ -236,7 +234,9 @@ const mapStateToProps = reducer => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // updateInfo : updateInfo(currentIndex,innerIndex)=>dispatch({action})
+    DeAllotSlot: params =>
+      dispatch({type: Constants.ALLOT_ACTIONS_FAIL, payload: params}),
+    // updateInfo : updateInfo(currentIndex,slotId)=>dispatch({action})
   };
 };
 
